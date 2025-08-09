@@ -1769,6 +1769,9 @@
       <Filter>lvgl\src\widgets\win</Filter>
     </ClInclude>
     <ClInclude Include="lv_conf.h" />
+    <ClInclude Include="vrx_ui.h">
+      <Filter>vrx_ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="LvglWindowsSimulator.manifest" />
@@ -4013,6 +4016,9 @@
       <Filter>lvgl\src\widgets\win</Filter>
     </ClCompile>
     <ClCompile Include="LvglWindowsSimulator.cpp" />
+    <ClCompile Include="vrx_ui.cpp">
+      <Filter>vrx_ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="freetype">
@@ -5364,6 +5370,9 @@
     </Filter>
     <Filter Include="lvgl\zephyr">
       <UniqueIdentifier>{e2b5f460-68ee-4ae1-b143-7367524c0b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vrx_ui">
+      <UniqueIdentifier>{003acf2a-18e5-4810-b404-e8120b889746}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -14853,5 +14862,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\LvglPlatform\lvgl\zephyr\module.yml">
       <Filter>lvgl\zephyr</Filter>
     </None>
+    <None Include="freetype.props" />
   </ItemGroup>
 </Project>
