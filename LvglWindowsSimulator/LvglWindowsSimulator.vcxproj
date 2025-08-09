@@ -628,6 +628,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LvglPlatform\lvgl\src\widgets\tileview\lv_tileview_private.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LvglPlatform\lvgl\src\widgets\win\lv_win.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LvglPlatform\lvgl\src\widgets\win\lv_win_private.h" />
+    <ClInclude Include="img_null.h" />
+    <ClInclude Include="img_return.h" />
+    <ClInclude Include="img_scan.h" />
     <ClInclude Include="vrx.h" />
     <ClInclude Include="vrx_ui.h" />
     <ClInclude Include="lv_conf.h" />
@@ -3620,6 +3623,9 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
+    <ClCompile Include="img_null.c" />
+    <ClCompile Include="img_return.c" />
+    <ClCompile Include="img_scan.c" />
     <ClCompile Include="vrx.cpp" />
     <ClCompile Include="vrx_ui.cpp" />
     <ClCompile Include="LvglWindowsSimulator.cpp" />

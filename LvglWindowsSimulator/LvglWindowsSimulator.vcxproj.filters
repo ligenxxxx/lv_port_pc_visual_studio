@@ -1775,6 +1775,15 @@
     <ClInclude Include="vrx.h">
       <Filter>vrx_ui</Filter>
     </ClInclude>
+    <ClInclude Include="img_scan.h">
+      <Filter>vrx_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="img_return.h">
+      <Filter>vrx_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="img_null.h">
+      <Filter>vrx_ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="LvglWindowsSimulator.manifest" />
@@ -4023,6 +4032,15 @@
       <Filter>vrx_ui</Filter>
     </ClCompile>
     <ClCompile Include="vrx.cpp">
+      <Filter>vrx_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="img_scan.c">
+      <Filter>vrx_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="img_return.c">
+      <Filter>vrx_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="img_null.c">
       <Filter>vrx_ui</Filter>
     </ClCompile>
   </ItemGroup>
