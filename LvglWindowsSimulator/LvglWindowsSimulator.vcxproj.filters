@@ -1772,6 +1772,9 @@
     <ClInclude Include="vrx_ui.h">
       <Filter>vrx_ui</Filter>
     </ClInclude>
+    <ClInclude Include="vrx.h">
+      <Filter>vrx_ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="LvglWindowsSimulator.manifest" />
@@ -4017,6 +4020,9 @@
     </ClCompile>
     <ClCompile Include="LvglWindowsSimulator.cpp" />
     <ClCompile Include="vrx_ui.cpp">
+      <Filter>vrx_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx.cpp">
       <Filter>vrx_ui</Filter>
     </ClCompile>
   </ItemGroup>

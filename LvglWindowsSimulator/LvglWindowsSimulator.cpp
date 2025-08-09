@@ -7,6 +7,10 @@
 #include "lvgl/demos/lv_demos.h"
 
 #include "vrx_ui.h"
+#include "vrx.h"
+
+
+lv_indev_t* keypad_indev;
 
 int main()
 {
@@ -67,7 +71,7 @@ int main()
         return -1;
     }
 
-    lv_indev_t* keypad_indev = lv_windows_acquire_keypad_indev(display);
+    keypad_indev = lv_windows_acquire_keypad_indev(display);
     if (!keypad_indev)
     {
         return -1;
@@ -81,6 +85,7 @@ int main()
 
     //lv_demo_widgets();
     //lv_demo_benchmark();
+    vrx_init();
     vrx_ui();
 
     while (1)

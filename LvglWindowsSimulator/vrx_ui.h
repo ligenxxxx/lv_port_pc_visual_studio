@@ -1,3 +1,4 @@
 ﻿#pragma once
 
-extern void vrx_ui();
+void vrx_ui();
+
