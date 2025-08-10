@@ -1,6 +1,8 @@
 #include "lvgl/lvgl.h"
 
 #include "vrx_ui.h"
+#include "screen_mainmenu.h"
+#include "screen_mainview.h"
 
 #include "img/img_scan.h"
 #include "img/img_return.h"
@@ -76,7 +78,8 @@ static void mainmenu_key_event_handler(lv_event_t* e) {
         case 'j':
             switch (current_selected_idx) {
             case MAIN_MENU_RETURN:
-                lv_screen_load(screen[SCR_MAINVIEW]); // 返回主视图
+                //lv_screen_load(screen[SCR_MAINVIEW]); // 返回主视图
+                switch_in_mainview();
                 lv_group_focus_obj(screen[SCR_MAINVIEW]);
                 current_selected_idx = MAIN_MENU_SCAN;
                 update_mainmenu_selection();

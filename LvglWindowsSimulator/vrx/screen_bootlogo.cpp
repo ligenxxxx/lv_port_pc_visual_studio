@@ -3,6 +3,7 @@
 #include "vrx_ui.h"
 
 #include "screen_bootlogo.h"
+#include "screen_mainview.h"
 
 //bootlogo
 static lv_obj_t* bootlogo_label = NULL;
@@ -28,9 +29,10 @@ static void show_timer_cb(lv_timer_t* timer) {
 }
 
 // 切换到主视图的定时器回调
-static void switch_to_mainview_cb(lv_timer_t* timer) {
+static void switch_in_mainview_cb(lv_timer_t* timer) {
     // 1 秒后加载主视图屏幕
-    lv_screen_load(screen[SCR_MAINVIEW]);
+    //lv_screen_load(screen[SCR_MAINVIEW]);
+    switch_in_mainview();
     lv_group_focus_obj(screen[SCR_MAINVIEW]);
     lv_timer_del(timer); // 执行后删除定时器
 }
@@ -56,5 +58,5 @@ void create_screen_bootlogo() {
     lv_timer_create(show_timer_cb, 0, NULL);
 
     // 创建 1 秒延迟切换定时器
-    lv_timer_create(switch_to_mainview_cb, 2000, NULL); // 2000ms = 2 秒
+    lv_timer_create(switch_in_mainview_cb, 2000, NULL); // 2000ms = 2 秒
 }
