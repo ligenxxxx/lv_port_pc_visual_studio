@@ -7,8 +7,17 @@
 
 #include "screen_mainview.h"
 
-static lv_obj_t* label_band;
-static lv_obj_t* label_channel;
+typedef enum{
+    DIR_UP,
+    DIR_DOWN,
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_MID,
+    DIR_NUM
+}dir_e;
+
+static lv_obj_t* label_band[DIR_NUM];
+static lv_obj_t* label_channel[DIR_NUM];
 static lv_obj_t* label_freq[4];
 static lv_obj_t* bar_rssi[2];//0 下面的，1上面的
 
@@ -24,19 +33,34 @@ static void (*anim_complete_cb)(void) = NULL; // 存储用户传入的完成回�
 static void switch_to_main_menu_after_anim();
 
 // 新增：存储标签和进度条的目标位置（用于动画结束后定位）
-static int label_band_target_y;
-static int label_channel_target_y;
+static int label_band_target_y[DIR_NUM];
+static int label_channel_target_y[DIR_NUM];
 static int label_freq_target_y[4];
 static int bar_rssi_target_y[2];
 
 static void mainview_update_label() {
     char str[8];
+    char band_str[DIR_NUM][4];
+    char channel_str[DIR_NUM][4];
+    int i;
 
-    vrx_get_band_str(str);
-    lv_label_set_text(label_band, str);
+    vrx_get_band_str(band_str[DIR_UP]);
+    vrx_get_band_str(band_str[DIR_DOWN]);
+    vrx_get_last_band_str(band_str[DIR_LEFT]);
+    vrx_get_next_band_str(band_str[DIR_RIGHT]);
+    vrx_get_band_str(band_str[DIR_MID]);
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_label_set_text(label_band[i], band_str[i]);
+    }
 
-    vrx_get_channel_str(str);
-    lv_label_set_text(label_channel, str);
+    vrx_get_last_channel_str(channel_str[DIR_UP]);
+    vrx_get_next_channel_str(channel_str[DIR_DOWN]);
+    vrx_get_channel_str(channel_str[DIR_LEFT]);
+    vrx_get_channel_str(channel_str[DIR_RIGHT]);
+    vrx_get_channel_str(channel_str[DIR_MID]);
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_label_set_text(label_channel[i], channel_str[i]);
+    }
 
     char str2[8];
     vrx_get_frequency_str(str);
@@ -129,41 +153,71 @@ static void mainview_key_event_handler(lv_event_t* e) {
     }
 }
 void create_band_label() {
+    const int pad_top_list[DIR_NUM] = {0, 54, 32, 32, 10};
+    const int pad_left_list[DIR_NUM] = {48, 48, 6, 98, 28};
     lv_obj_t* scr = screen[SCR_MAINVIEW];
-    char str[8];
+    char band_str[DIR_NUM][8];
 
-    label_band = lv_label_create(scr);
-    lv_obj_set_style_text_color(label_band, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-    lv_obj_set_style_text_font(label_band, &lv_font_montserrat_48, LV_PART_MAIN);
-    lv_obj_set_align(label_band, LV_ALIGN_TOP_LEFT);
-    lv_obj_set_style_pad_top(label_band, 10, LV_PART_MAIN);
-    lv_obj_set_style_pad_left(label_band, 10, LV_PART_MAIN);
-    
-    // 存储目标Y位置（原本的正常位置）
-    label_band_target_y = lv_obj_get_y(label_band); 
-    lv_obj_set_y(label_band, -100); // 固定在屏幕外，与stop动画保持统一
+    vrx_get_band_str(band_str[DIR_UP]);
+    vrx_get_band_str(band_str[DIR_DOWN]);
+    vrx_get_last_band_str(band_str[DIR_LEFT]);
+    vrx_get_next_band_str(band_str[DIR_RIGHT]);
+    vrx_get_band_str(band_str[DIR_MID]);
 
-    vrx_get_band_str(str);
-    lv_label_set_text(label_band, str);
+    for(int i = 0; i < DIR_NUM; i++) {
+        label_band[i] = lv_label_create(scr);
+        lv_obj_set_style_text_color(label_band[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+        if(i == DIR_MID) {
+            lv_obj_set_style_text_color(label_band[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_48, LV_PART_MAIN);
+        } else {
+            lv_obj_set_style_text_color(label_band[i], lv_color_hex(0x404040), LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_16, LV_PART_MAIN);
+        }
+        lv_obj_set_align(label_band[i], LV_ALIGN_TOP_LEFT);
+        lv_obj_set_style_pad_top(label_band[i], pad_top_list[i], LV_PART_MAIN);
+        lv_obj_set_style_pad_left(label_band[i], pad_left_list[i], LV_PART_MAIN);
+
+        // 存储目标Y位置（原本的正常位置）
+        label_band_target_y[i] = lv_obj_get_y(label_band[i]); 
+        lv_obj_set_y(label_band[i], -100); // 固定在屏幕外，与stop动画保持统一
+
+        lv_label_set_text(label_band[i], band_str[i]);
+    }
+
 }
 void create_channel_label() {
+    const int pad_top_list[DIR_NUM] = {0, 54, 32, 32, 10};
+    const int pad_left_list[DIR_NUM] = {58, 58, 16, 108, 64};
     lv_obj_t* scr = screen[SCR_MAINVIEW];
-    char str[8];
+    char channel_str[DIR_NUM][4];
 
-    label_channel = lv_label_create(scr);
-    lv_obj_set_style_text_color(label_channel, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-    lv_obj_set_style_text_font(label_channel, &lv_font_montserrat_48, LV_PART_MAIN);
-    lv_obj_set_align(label_channel, LV_ALIGN_TOP_LEFT);
-    lv_obj_set_style_pad_top(label_channel, 10, LV_PART_MAIN);
-    lv_obj_set_style_pad_left(label_channel, 10 + FONT_WIDTH + 6, LV_PART_MAIN);
+    vrx_get_last_channel_str(channel_str[DIR_UP]);
+    vrx_get_next_channel_str(channel_str[DIR_DOWN]);
+    vrx_get_channel_str(channel_str[DIR_LEFT]);
+    vrx_get_channel_str(channel_str[DIR_RIGHT]);
+    vrx_get_channel_str(channel_str[DIR_MID]);
 
-    // 存储目标Y位置
-    label_channel_target_y = lv_obj_get_y(label_channel);
-    // 初始位置：屏幕顶部外部
-    lv_obj_set_y(label_channel, -100);
-
-    vrx_get_channel_str(str);
-    lv_label_set_text(label_channel, str);
+    for(int i = 0; i < DIR_NUM; i++) {
+        label_channel[i] = lv_label_create(scr);
+        if(i==DIR_MID) {
+            lv_obj_set_style_text_color(label_channel[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_48, LV_PART_MAIN);
+        }else {
+            lv_obj_set_style_text_color(label_channel[i], lv_color_hex(0x404040), LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_16, LV_PART_MAIN);
+        }
+        lv_obj_set_align(label_channel[i], LV_ALIGN_TOP_LEFT);
+        lv_obj_set_style_pad_top(label_channel[i], pad_top_list[i], LV_PART_MAIN);
+        lv_obj_set_style_pad_left(label_channel[i], pad_left_list[i], LV_PART_MAIN);
+        
+        // 存储目标Y位置
+        label_channel_target_y[i] = lv_obj_get_y(label_channel[i]);
+        // 初始位置：屏幕顶部外部
+        lv_obj_set_y(label_channel[i], -100);
+        
+        lv_label_set_text(label_channel[i], channel_str[i]);
+    }
 }
 
 void create_freq_label() {
@@ -177,7 +231,7 @@ void create_freq_label() {
         lv_obj_set_style_text_font(label_freq[i], &lv_font_montserrat_48, LV_PART_MAIN);
         lv_obj_set_align(label_freq[i], LV_ALIGN_TOP_LEFT);
         lv_obj_set_style_pad_top(label_freq[i], 10, LV_PART_MAIN);
-        lv_obj_set_style_pad_left(label_freq[i], 120 + i * FONT_WIDTH, LV_PART_MAIN);
+        lv_obj_set_style_pad_left(label_freq[i], 130 + i * FONT_WIDTH, LV_PART_MAIN);
 
         // 存储目标Y位置
         label_freq_target_y[i] = lv_obj_get_y(label_freq[i]);
@@ -226,7 +280,7 @@ void create_rssi_bar() {
         lv_obj_set_y(bar_rssi[i], -40);
 
         // 明确目标位置为屏幕底部内（负值表示从底部向上偏移）
-        int y_offset = -(10 + i * 26);
+        int y_offset = -(6 + i * 26);
         bar_rssi_target_y[i] = y_offset;
 
         // 初始值无动画，后续通过动画函数设置
@@ -248,23 +302,29 @@ static void bar_anim_in(lv_obj_t* bar, int32_t y) {
 static void start_mainview_animations(lv_timer_t* timer) {
     lv_obj_t* scr = screen[SCR_MAINVIEW];
     lv_anim_t anim;
+    int i;
+
     lv_anim_init(&anim);
     lv_anim_set_path_cb(&anim, lv_anim_path_ease_out); // 动画曲线：先快后慢
     lv_anim_set_duration(&anim, 300); // 动画总时长300ms
 
     // 1. 标签动画（从上方滑入）
-    // band标签动画（延迟0ms启动）
-    lv_anim_set_var(&anim, label_band);
+    // band标签动画
     lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t)label_anim_in);
-    lv_anim_set_values(&anim, lv_obj_get_y(label_band), label_band_target_y);
-    lv_anim_set_delay(&anim, 0);
-    lv_anim_start(&anim);
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_anim_set_var(&anim, label_band[i]);
+        lv_anim_set_values(&anim, lv_obj_get_y(label_band[i]), label_band_target_y[i]);
+        lv_anim_set_delay(&anim, 0);
+        lv_anim_start(&anim);
+    }
 
-    // channel标签动画（延迟100ms启动，形成层次感）
-    lv_anim_set_var(&anim, label_channel);
-    lv_anim_set_values(&anim, lv_obj_get_y(label_channel), label_channel_target_y);
-    lv_anim_set_delay(&anim, 0);
-    lv_anim_start(&anim);
+    // channel标签动画
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_anim_set_var(&anim, label_channel[i]);
+        lv_anim_set_values(&anim, lv_obj_get_y(label_channel[i]), label_channel_target_y[i]);
+        lv_anim_set_delay(&anim, 0);
+        lv_anim_start(&anim);
+    }
 
     // freq标签动画（每个延迟50ms启动）
     for (int i = 0; i < 4; i++) {
@@ -290,8 +350,8 @@ static void start_mainview_animations(lv_timer_t* timer) {
     lv_anim_start(&anim);
 
     // 启动进度条数值动画（从0到目标值）
-    bar_set_value_anim(bar_rssi[0], 50, 800);  // 第一个进度条到50
-    bar_set_value_anim(bar_rssi[1], 70, 800);  // 第二个进度条到70
+    bar_set_value_anim(bar_rssi[0], 50, 800);  // 下面的
+    bar_set_value_anim(bar_rssi[1], 70, 800);  // 上面的
 
     lv_timer_del(timer); // 动画启动后删除定时器
 }
@@ -310,7 +370,7 @@ static void label_anim_out(lv_obj_t* label, int32_t y) {
     void (*on_complete)(void) = (void (*)())lv_obj_get_user_data(label);
 
     // 判断是否达到目标位置且是最后一个滑出的标签（label_band）
-    if (on_complete && label == label_band && y == -lv_obj_get_height(label) * 2) {
+    if (on_complete && label == label_band[DIR_MID] && y == -lv_obj_get_height(label) * 2) {
         on_complete(); // 触发回调
     }
 }
@@ -322,18 +382,18 @@ static void bar_anim_out(lv_obj_t* bar, int32_t y) {
 
 static void stop_mainview_animations(void (*on_complete)(void)) {
     lv_obj_t* scr = screen[SCR_MAINVIEW];
-    if (scr == NULL) return;
+    lv_anim_t anim;
+    int i;
 
     // 给最后滑出的标签（label_band）设置用户数据（存储回调函数）
-    lv_obj_set_user_data(label_band, on_complete);
+    lv_obj_set_user_data(label_band[DIR_MID], on_complete);
 
-    lv_anim_t anim;
     lv_anim_init(&anim);
     lv_anim_set_path_cb(&anim, lv_anim_path_ease_in);
     lv_anim_set_duration(&anim, 300);
 
     // 1. 标签滑出
-    int32_t hide_y = -lv_obj_get_height(label_band) * 2;
+    int32_t hide_y = -lv_obj_get_height(label_band[DIR_MID]) * 2;
 
     // freq标签滑出
     for (int i = 3; i >= 0; i--) {
@@ -345,18 +405,22 @@ static void stop_mainview_animations(void (*on_complete)(void)) {
     }
 
     // channel标签滑出
-    lv_anim_set_var(&anim, label_channel);
-    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t)label_anim_out);
-    lv_anim_set_values(&anim, lv_obj_get_y(label_channel), hide_y);
-    lv_anim_set_delay(&anim, 200);
-    lv_anim_start(&anim);
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_anim_set_var(&anim, label_channel[i]);
+        lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t)label_anim_out);
+        lv_anim_set_values(&anim, lv_obj_get_y(label_channel[i]), hide_y);
+        lv_anim_set_delay(&anim, 200);
+        lv_anim_start(&anim);
+    }
 
     // band标签滑出（最后滑出，触发回调）
-    lv_anim_set_var(&anim, label_band);
-    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t)label_anim_out);
-    lv_anim_set_values(&anim, lv_obj_get_y(label_band), hide_y);
-    lv_anim_set_delay(&anim, 300);
-    lv_anim_start(&anim);
+    for (i = 0; i < DIR_NUM; i++) {
+        lv_anim_set_var(&anim, label_band[i]);
+        lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t)label_anim_out);
+        lv_anim_set_values(&anim, lv_obj_get_y(label_band[i]), hide_y);
+        lv_anim_set_delay(&anim, 300);
+        lv_anim_start(&anim);
+    }
 
     // 进度条滑出
     // 上面的

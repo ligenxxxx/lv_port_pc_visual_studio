@@ -54,11 +54,50 @@ void vrx_set_channel_idx(int is_band, int is_next) {
 void vrx_get_band_str(char *str) {
     const char band_str[6] = {'A', 'B', 'E', 'F', 'R', 'L'};
     int band = vrx_channel >> 3;
+
+    sprintf(str, "%c", band_str[band]);
+}
+void vrx_get_next_band_str(char *str) {
+    const char band_str[6] = {'A', 'B', 'E', 'F', 'R', 'L'};
+    int band = vrx_channel >> 3;
+
+    band += 1;
+    if (band > 5)
+        band = 0;
+
+    sprintf(str, "%c", band_str[band]);
+}
+void vrx_get_last_band_str(char *str) {
+    const char band_str[6] = {'A', 'B', 'E', 'F', 'R', 'L'};
+    int band = vrx_channel >> 3;
+
+    band -= 1;
+    if (band < 0)
+        band = 5;
+
     sprintf(str, "%c", band_str[band]);
 }
 
 void vrx_get_channel_str(char *str) {
     int channel = vrx_channel & 7;
+    sprintf(str, "%d", channel + 1);
+}
+void vrx_get_next_channel_str(char *str) {
+    int channel = vrx_channel & 7;
+
+    channel += 1;
+    if (channel > 7)
+        channel = 0;
+
+    sprintf(str, "%d", channel + 1);
+}
+void vrx_get_last_channel_str(char *str) {
+    int channel = vrx_channel & 7;
+
+    channel -= 1;
+    if (channel < 0)
+        channel = 7;
+
     sprintf(str, "%d", channel + 1);
 }
 
