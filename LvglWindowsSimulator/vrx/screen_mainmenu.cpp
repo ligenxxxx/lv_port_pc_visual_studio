@@ -1,4 +1,4 @@
-#include "lvgl/lvgl.h"
+﻿#include "lvgl/lvgl.h"
 
 #include "vrx_ui.h"
 #include "screen_mainmenu.h"
@@ -8,8 +8,21 @@
 #include "img/img_return.h"
 #include "img/img_null.h"
 
+// 菜单图标对应的文本
+static const char* mainmenu_texts[MAIN_MENU_NUM] = {
+    "Return",
+    "Scan",
+    "Antenna",
+    "Spectrum",
+    "RSSI",
+    "Calibration",
+    "About",
+    " "
+};
+
 static int current_selected_idx = 0; // 默认选中第一个图标
 static lv_obj_t* mainmenu_imgs[MAIN_MENU_NUM]; // 存储所有图标的指针
+static lv_obj_t* mainmenu_labels[MAIN_MENU_NUM]; // 存储所有标签的指针
 static const lv_coord_t icon_original_size = 96; // 原始图标尺寸
 static const uint16_t scale_full = 256; // 100% 缩放（LVGL 中 scale 基准值通常为 256）
 static const uint16_t scale_half = 128; // 50% 缩放（256/2）
@@ -20,10 +33,12 @@ static void update_mainmenu_selection(void) {
         if (i == current_selected_idx) {
             // 选中状态：100% 原始大小
             lv_image_set_scale(mainmenu_imgs[i], scale_full);
+            lv_obj_set_style_text_font(mainmenu_labels[i], &lv_font_montserrat_22, 0);
         }
         else {
             // 未选中状态：50% 缩小
             lv_image_set_scale(mainmenu_imgs[i], scale_half);
+            lv_obj_set_style_text_font(mainmenu_labels[i], &lv_font_montserrat_14, 0);
         }
     }
 }
@@ -112,18 +127,37 @@ void create_screen_mainmenu() {
     // 图标布局参数（适配缩放后的间距）
     const int spacing = 10; // 图标间距（考虑缩小后的尺寸）
     const int top_margin = 6; // 顶部边距（居中靠上）
+    const int icon_label_gap = 0; // 图标和标签之间的间距
 
     // 计算第一个图标的起始位置（基于原始尺寸）
     int start_x = (256 - icon_original_size) / 2;
 
     // 创建图标并初始化
     for (int i = 0; i < MAIN_MENU_NUM; i++) {
+        // 创建图标
         mainmenu_imgs[i] = lv_image_create(screen[SCR_MAIN_MENU]);
         lv_image_set_src(mainmenu_imgs[i], &img_scan);
+        
+        // 创建标签
+        mainmenu_labels[i] = lv_label_create(screen[SCR_MAIN_MENU]);
+        lv_label_set_text(mainmenu_labels[i], mainmenu_texts[i]);
+        lv_obj_set_style_text_color(mainmenu_labels[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN); // 白色文本
+        lv_obj_set_style_text_align(mainmenu_labels[i], LV_TEXT_ALIGN_CENTER, LV_PART_MAIN); // 文本居中
+    
+        // 设置标签固定宽度
+        lv_obj_set_width(mainmenu_labels[i], 128);
+
         // 计算位置（基于原始尺寸排列，确保缩放后布局协调）
         int x_pos = start_x + i * (icon_original_size + spacing);
         int y_pos = top_margin;
+    
+        // 设置图标位置
         lv_obj_set_pos(mainmenu_imgs[i], x_pos, y_pos);
+        
+        // 设置标签位置（在图标正下方，与图标左对齐，由于宽度相同，会自然居中对齐）
+        lv_obj_set_x(mainmenu_labels[i], x_pos - 16);
+        lv_obj_set_y(mainmenu_labels[i], y_pos + icon_original_size + icon_label_gap);
+
     }
     lv_image_set_src(mainmenu_imgs[MAIN_MENU_RETURN], &img_return);
     lv_image_set_src(mainmenu_imgs[MAIN_MENU_SCAN], &img_scan);
