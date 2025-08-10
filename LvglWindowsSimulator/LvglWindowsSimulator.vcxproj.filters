@@ -1769,20 +1769,29 @@
       <Filter>lvgl\src\widgets\win</Filter>
     </ClInclude>
     <ClInclude Include="lv_conf.h" />
-    <ClInclude Include="vrx_ui.h">
-      <Filter>vrx_ui</Filter>
-    </ClInclude>
     <ClInclude Include="vrx.h">
-      <Filter>vrx_ui</Filter>
+      <Filter>vrx</Filter>
     </ClInclude>
-    <ClInclude Include="img_scan.h">
-      <Filter>vrx_ui</Filter>
+    <ClInclude Include="vrx\img\img_null.h">
+      <Filter>vrx\ui\img</Filter>
     </ClInclude>
-    <ClInclude Include="img_return.h">
-      <Filter>vrx_ui</Filter>
+    <ClInclude Include="vrx\img\img_return.h">
+      <Filter>vrx\ui\img</Filter>
     </ClInclude>
-    <ClInclude Include="img_null.h">
-      <Filter>vrx_ui</Filter>
+    <ClInclude Include="vrx\img\img_scan.h">
+      <Filter>vrx\ui\img</Filter>
+    </ClInclude>
+    <ClInclude Include="vrx\screen_bootlogo.h">
+      <Filter>vrx\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="vrx\screen_mainmenu.h">
+      <Filter>vrx\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="vrx\screen_mainview.h">
+      <Filter>vrx\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="vrx\vrx_ui.h">
+      <Filter>vrx\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4028,20 +4037,29 @@
       <Filter>lvgl\src\widgets\win</Filter>
     </ClCompile>
     <ClCompile Include="LvglWindowsSimulator.cpp" />
-    <ClCompile Include="vrx_ui.cpp">
-      <Filter>vrx_ui</Filter>
-    </ClCompile>
     <ClCompile Include="vrx.cpp">
-      <Filter>vrx_ui</Filter>
+      <Filter>vrx</Filter>
     </ClCompile>
-    <ClCompile Include="img_scan.c">
-      <Filter>vrx_ui</Filter>
+    <ClCompile Include="vrx\img\img_null.c">
+      <Filter>vrx\ui\img</Filter>
     </ClCompile>
-    <ClCompile Include="img_return.c">
-      <Filter>vrx_ui</Filter>
+    <ClCompile Include="vrx\img\img_return.c">
+      <Filter>vrx\ui\img</Filter>
     </ClCompile>
-    <ClCompile Include="img_null.c">
-      <Filter>vrx_ui</Filter>
+    <ClCompile Include="vrx\img\img_scan.c">
+      <Filter>vrx\ui\img</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\screen_bootlogo.cpp">
+      <Filter>vrx\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\screen_mainmenu.cpp">
+      <Filter>vrx\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\screen_mainview.cpp">
+      <Filter>vrx\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\vrx_ui.cpp">
+      <Filter>vrx\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5395,8 +5413,14 @@
     <Filter Include="lvgl\zephyr">
       <UniqueIdentifier>{e2b5f460-68ee-4ae1-b143-7367524c0b28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vrx_ui">
+    <Filter Include="vrx">
       <UniqueIdentifier>{003acf2a-18e5-4810-b404-e8120b889746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vrx\ui">
+      <UniqueIdentifier>{535655e4-5509-4a06-a32a-f5d93b50779d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vrx\ui\img">
+      <UniqueIdentifier>{eb609d12-ce6e-4db4-9ce6-bb3cfb083352}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

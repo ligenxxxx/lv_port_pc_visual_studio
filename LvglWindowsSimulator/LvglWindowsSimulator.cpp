@@ -6,7 +6,7 @@
 #include "lvgl/examples/lv_examples.h"
 #include "lvgl/demos/lv_demos.h"
 
-#include "vrx_ui.h"
+#include "vrx/vrx_ui.h"
 #include "vrx.h"
 
 

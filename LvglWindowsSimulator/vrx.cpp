@@ -21,7 +21,7 @@ int vrx_get_channel() {
     return vrx_channel;
 }
 
-void vrx_set_channel(int is_band, int is_next) {
+void vrx_set_channel_idx(int is_band, int is_next) {
     int band = vrx_channel >> 3;
     int channel = vrx_channel & 7;
     if (is_band) {
@@ -51,12 +51,15 @@ void vrx_set_channel(int is_band, int is_next) {
     vrx_channel = (band << 3) | channel;
 }
 
-void vrx_get_channel_str(char *str) {
+void vrx_get_band_str(char *str) {
     const char band_str[6] = {'A', 'B', 'E', 'F', 'R', 'L'};
     int band = vrx_channel >> 3;
-    int channel = vrx_channel & 7;
+    sprintf(str, "%c", band_str[band]);
+}
 
-    sprintf(str, "%c%d", band_str[band], channel + 1);
+void vrx_get_channel_str(char *str) {
+    int channel = vrx_channel & 7;
+    sprintf(str, "%d", channel + 1);
 }
 
 void vrx_get_frequency_str(char *str) {

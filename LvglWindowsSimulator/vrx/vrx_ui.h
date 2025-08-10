@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#define FONT_WIDTH 32
+
 
 typedef enum {
     SCR_BOOTLOGO = 0,
@@ -22,3 +24,4 @@ typedef enum{
 
 void vrx_ui();
 
+extern lv_obj_t* screen[SCR_NUMBER];
