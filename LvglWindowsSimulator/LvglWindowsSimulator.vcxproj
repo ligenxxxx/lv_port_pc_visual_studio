@@ -630,9 +630,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LvglPlatform\lvgl\src\widgets\win\lv_win_private.h" />
     <ClInclude Include="vrx.h" />
     <ClInclude Include="lv_conf.h" />
+    <ClInclude Include="vrx\img\img_antenna.h" />
     <ClInclude Include="vrx\img\img_null.h" />
     <ClInclude Include="vrx\img\img_return.h" />
     <ClInclude Include="vrx\img\img_scan.h" />
+    <ClInclude Include="vrx\img\img_spectrum.h" />
     <ClInclude Include="vrx\screen_bootlogo.h" />
     <ClInclude Include="vrx\screen_mainmenu.h" />
     <ClInclude Include="vrx\screen_mainview.h" />
@@ -3628,9 +3630,11 @@
     </ClCompile>
     <ClCompile Include="vrx.cpp" />
     <ClCompile Include="LvglWindowsSimulator.cpp" />
+    <ClCompile Include="vrx\img\img_antenna.c" />
     <ClCompile Include="vrx\img\img_null.c" />
     <ClCompile Include="vrx\img\img_return.c" />
     <ClCompile Include="vrx\img\img_scan.c" />
+    <ClCompile Include="vrx\img\img_spectrum.c" />
     <ClCompile Include="vrx\screen_bootlogo.cpp" />
     <ClCompile Include="vrx\screen_mainmenu.cpp" />
     <ClCompile Include="vrx\screen_mainview.cpp" />

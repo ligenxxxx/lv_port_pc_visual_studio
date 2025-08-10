@@ -7,6 +7,8 @@
 #include "img/img_scan.h"
 #include "img/img_return.h"
 #include "img/img_null.h"
+#include "img/img_antenna.h"
+#include "img/img_spectrum.h"
 
 // 菜单图标对应的文本
 static const char* mainmenu_texts[MAIN_MENU_NUM] = {
@@ -161,6 +163,8 @@ void create_screen_mainmenu() {
     }
     lv_image_set_src(mainmenu_imgs[MAIN_MENU_RETURN], &img_return);
     lv_image_set_src(mainmenu_imgs[MAIN_MENU_SCAN], &img_scan);
+    lv_image_set_src(mainmenu_imgs[MAIN_MENU_ANTENNA], &img_antenna);
+    lv_image_set_src(mainmenu_imgs[MAIN_MENU_SPECTRUM], &img_spectrum);
     lv_image_set_src(mainmenu_imgs[MAIN_MENU_NULL], &img_null);
 
     // 初始化选中状态（默认选中第二个）

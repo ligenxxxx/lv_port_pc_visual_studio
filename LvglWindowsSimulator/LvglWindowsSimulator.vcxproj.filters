@@ -1793,6 +1793,12 @@
     <ClInclude Include="vrx\vrx_ui.h">
       <Filter>vrx\ui</Filter>
     </ClInclude>
+    <ClInclude Include="vrx\img\img_antenna.h">
+      <Filter>vrx\ui\img</Filter>
+    </ClInclude>
+    <ClInclude Include="vrx\img\img_spectrum.h">
+      <Filter>vrx\ui\img</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="LvglWindowsSimulator.manifest" />
@@ -4060,6 +4066,12 @@
     </ClCompile>
     <ClCompile Include="vrx\vrx_ui.cpp">
       <Filter>vrx\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\img\img_antenna.c">
+      <Filter>vrx\ui\img</Filter>
+    </ClCompile>
+    <ClCompile Include="vrx\img\img_spectrum.c">
+      <Filter>vrx\ui\img</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
