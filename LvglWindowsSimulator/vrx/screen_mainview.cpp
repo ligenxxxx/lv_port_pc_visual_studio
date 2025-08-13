@@ -153,8 +153,8 @@ static void mainview_key_event_handler(lv_event_t* e) {
     }
 }
 void create_band_label() {
-    const int pad_top_list[DIR_NUM] = {0, 54, 32, 32, 10};
-    const int pad_left_list[DIR_NUM] = {48, 48, 6, 98, 28};
+    const int pad_top_list[DIR_NUM] = {0, 30, 16, 16, 6};
+    const int pad_left_list[DIR_NUM] = {24, 24, 3, 50, 16};
     lv_obj_t* scr = screen[SCR_MAINVIEW];
     char band_str[DIR_NUM][8];
 
@@ -169,10 +169,10 @@ void create_band_label() {
         lv_obj_set_style_text_color(label_band[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
         if(i == DIR_MID) {
             lv_obj_set_style_text_color(label_band[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_48, LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_24, LV_PART_MAIN);
         } else {
             lv_obj_set_style_text_color(label_band[i], lv_color_hex(0x404040), LV_PART_MAIN);
-            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_16, LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_band[i], &lv_font_montserrat_10, LV_PART_MAIN);
         }
         lv_obj_set_align(label_band[i], LV_ALIGN_TOP_LEFT);
         lv_obj_set_style_pad_top(label_band[i], pad_top_list[i], LV_PART_MAIN);
@@ -180,15 +180,15 @@ void create_band_label() {
 
         // 存储目标Y位置（原本的正常位置）
         label_band_target_y[i] = lv_obj_get_y(label_band[i]); 
-        lv_obj_set_y(label_band[i], -100); // 固定在屏幕外，与stop动画保持统一
+        lv_obj_set_y(label_band[i], -50); // 固定在屏幕外，与stop动画保持统一
 
         lv_label_set_text(label_band[i], band_str[i]);
     }
 
 }
 void create_channel_label() {
-    const int pad_top_list[DIR_NUM] = {0, 54, 32, 32, 10};
-    const int pad_left_list[DIR_NUM] = {58, 58, 16, 108, 64};
+    const int pad_top_list[DIR_NUM] = {0, 30, 16, 16, 6};
+    const int pad_left_list[DIR_NUM] = {32, 32, 11, 58, 34};
     lv_obj_t* scr = screen[SCR_MAINVIEW];
     char channel_str[DIR_NUM][4];
 
@@ -202,10 +202,10 @@ void create_channel_label() {
         label_channel[i] = lv_label_create(scr);
         if(i==DIR_MID) {
             lv_obj_set_style_text_color(label_channel[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_48, LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_24, LV_PART_MAIN);
         }else {
             lv_obj_set_style_text_color(label_channel[i], lv_color_hex(0x404040), LV_PART_MAIN);
-            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_16, LV_PART_MAIN);
+            lv_obj_set_style_text_font(label_channel[i], &lv_font_montserrat_10, LV_PART_MAIN);
         }
         lv_obj_set_align(label_channel[i], LV_ALIGN_TOP_LEFT);
         lv_obj_set_style_pad_top(label_channel[i], pad_top_list[i], LV_PART_MAIN);
@@ -214,7 +214,7 @@ void create_channel_label() {
         // 存储目标Y位置
         label_channel_target_y[i] = lv_obj_get_y(label_channel[i]);
         // 初始位置：屏幕顶部外部
-        lv_obj_set_y(label_channel[i], -100);
+        lv_obj_set_y(label_channel[i], -50);
         
         lv_label_set_text(label_channel[i], channel_str[i]);
     }
@@ -228,15 +228,15 @@ void create_freq_label() {
     for (int i = 0; i < 4; i++) {
         label_freq[i] = lv_label_create(scr);
         lv_obj_set_style_text_color(label_freq[i], lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-        lv_obj_set_style_text_font(label_freq[i], &lv_font_montserrat_48, LV_PART_MAIN);
+        lv_obj_set_style_text_font(label_freq[i], &lv_font_montserrat_24, LV_PART_MAIN);
         lv_obj_set_align(label_freq[i], LV_ALIGN_TOP_LEFT);
-        lv_obj_set_style_pad_top(label_freq[i], 10, LV_PART_MAIN);
-        lv_obj_set_style_pad_left(label_freq[i], 130 + i * FONT_WIDTH, LV_PART_MAIN);
+        lv_obj_set_style_pad_top(label_freq[i], 6, LV_PART_MAIN);
+        lv_obj_set_style_pad_left(label_freq[i], 74 + i * FONT_WIDTH, LV_PART_MAIN);
 
         // 存储目标Y位置
         label_freq_target_y[i] = lv_obj_get_y(label_freq[i]);
         // 初始位置：屏幕顶部外部
-        lv_obj_set_y(label_freq[i], -100);
+        lv_obj_set_y(label_freq[i], -50);
     }
 
     vrx_get_frequency_str(str1);
@@ -248,8 +248,8 @@ void create_freq_label() {
 
 void create_rssi_bar() {
     lv_obj_t* scr = screen[SCR_MAINVIEW];
-    const int indic_width = 240;
-    const int indic_height = 20;
+    const int indic_width = 120;
+    const int indic_height = 10;
 
     static lv_style_t style_bg;
     static lv_style_t style_indic;
@@ -258,8 +258,8 @@ void create_rssi_bar() {
     lv_style_set_bg_color(&style_bg, lv_color_hex(0x333333)); // 修正：添加0x前缀
     lv_style_set_bg_opa(&style_bg, LV_OPA_100);
     lv_style_set_border_color(&style_bg, lv_color_hex(0xFFFFFF));
-    lv_style_set_border_width(&style_bg, 2);
-    lv_style_set_pad_all(&style_bg, 6);
+    lv_style_set_border_width(&style_bg, 1);
+    lv_style_set_pad_all(&style_bg, 2);
     lv_style_set_radius(&style_bg, 3);
 
     lv_style_init(&style_indic);
@@ -277,10 +277,10 @@ void create_rssi_bar() {
         lv_obj_set_align(bar_rssi[i], LV_ALIGN_BOTTOM_MID);
 
         // 强制初始位置在屏幕顶部外（使用固定高度计算，避免动态获取失败）
-        lv_obj_set_y(bar_rssi[i], -40);
+        lv_obj_set_y(bar_rssi[i], -20);
 
         // 明确目标位置为屏幕底部内（负值表示从底部向上偏移）
-        int y_offset = -(6 + i * 26);
+        int y_offset = -(i * 12);
         bar_rssi_target_y[i] = y_offset;
 
         // 初始值无动画，后续通过动画函数设置

@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#define FONT_WIDTH 32
-
-
 typedef enum {
     SCR_BOOTLOGO = 0,
     SCR_MAINVIEW,

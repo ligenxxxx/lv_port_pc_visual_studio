@@ -49,7 +49,7 @@ void create_screen_bootlogo() {
     lv_label_set_text(bootlogo_label, "NEWBEEFLY");
     lv_obj_set_align(bootlogo_label, LV_ALIGN_CENTER);
     lv_obj_set_style_text_color(bootlogo_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-    lv_obj_set_style_text_font(bootlogo_label, &lv_font_montserrat_28, LV_PART_MAIN);
+    lv_obj_set_style_text_font(bootlogo_label, &lv_font_montserrat_14, LV_PART_MAIN);
 
     // 初始状态设置为完全透明（隐藏）
     lv_obj_set_style_opa(bootlogo_label, LV_OPA_0, LV_PART_MAIN);
