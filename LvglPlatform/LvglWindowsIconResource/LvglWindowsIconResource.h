@@ -5,7 +5,7 @@
  *
  * LICENSE:   The MIT License
  *
- * MAINTAINER: MouriNaruto (Kenji.Mouri@outlook.com)
+// * MAINTAINER: MouriNaruto (Kenji.Mouri@outlook.com)
  */
 
 #define IDI_LVGL_WINDOWS                       101
